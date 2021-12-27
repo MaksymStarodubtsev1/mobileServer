@@ -52,7 +52,5 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen('https://compassionate-murdock-cecd2f.netlify.app', () => {
-  console.log('listening on *:3000');
-});
+server.listen('https://compassionate-murdock-cecd2f.netlify.app/');
 

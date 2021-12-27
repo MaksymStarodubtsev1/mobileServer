@@ -1,4 +1,15 @@
-const io = require('socket.io')(808);
+// const io = require('socket.io')(808);
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
 const axios = require('axios')
 
@@ -11,22 +22,6 @@ function post(request) {
 })
 }
 
-// }) {
-//   fetch('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(request)
-//   })
-//   .then(() => {reloadMessages()})
-// }
-
-// function get() {
-//   return fetch('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json')
-//   .then((response) => response.json())
-//   .then((d) => d)
-// }
 
 function get() {
   return axios.get('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json')
@@ -56,4 +51,8 @@ io.on('connection', (socket) => {
     console.log('disconnect', socket);
   })
 })
+
+server.listen('https://compassionate-murdock-cecd2f.netlify.app', () => {
+  console.log('listening on *:3000');
+});
 

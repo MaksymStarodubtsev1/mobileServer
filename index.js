@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const http = require('http');
+const http = require('https');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
@@ -52,5 +52,7 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen('https://compassionate-murdock-cecd2f.netlify.app/');
+server.listen('compassionate-murdock-cecd2f.netlify.app' () => {
+  console.log('listening on *:3000');
+});
 

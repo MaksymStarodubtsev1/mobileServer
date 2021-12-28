@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen('https://compassionate-murdock-cecd2f.netlify.app/' () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log('listening on *:3000');
 });
 

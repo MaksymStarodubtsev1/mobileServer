@@ -1,4 +1,4 @@
-const io = require('socket.io') (1919);
+const io = require('socket.io')(1919);
 
 const axios = require('axios')
 

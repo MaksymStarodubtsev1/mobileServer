@@ -6,9 +6,19 @@ const http = require('https');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/test', (req, res) => {
+  res.send('Hello, I"m working!');
 });
 
 const axios = require('axios')
@@ -52,7 +62,7 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('listening on *:3000');
 });
 

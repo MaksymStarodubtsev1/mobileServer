@@ -6,8 +6,6 @@ let rageData = [];
 let altData = [];
 
 setInterval(() => {
-    var rage = JSON.parse(require('fs').readFileSync('./included/servRage.json', 'utf8'));
-    var alt = JSON.parse(require('fs').readFileSync('./included/servAlt.json', 'utf8'));
 
     rageData = [];
     altData = [];

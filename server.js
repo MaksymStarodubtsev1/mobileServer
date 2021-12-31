@@ -31,7 +31,7 @@ function post(request) {
 
 function get() {
   return axios.get('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json')
-  .then((response) => console.log(response.data))
+  .then((response) => response.data)
 }
 
 io.on('connection', (socket) => {

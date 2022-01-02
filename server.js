@@ -12,10 +12,10 @@ const server = express()
 
 const io = socketIO(server);
 
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
-});
+// io.on('connection', (socket) => {
+//   console.log('Client connected');
+//   socket.on('disconnect', () => console.log('Client disconnected'));
+// });
 
 // setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
@@ -36,12 +36,17 @@ function get() {
 
 io.on('connection', (socket) => {
   console.log('socket.id',socket.id)
-
+  
+socket.emit('secondEvent', 'hello from Server')
+socket.on('getChatData', () => {
+    const request = await get()
+    return request
+})
+  
   socket.on('firstEvent', (e) => {
     console.log('firstEvent',e)
   })
-  socket.emit('secondEvent', 'hello from Server')
-
+  
   socket.on('sendMessage', (message) => {
     post(JSON.parse(message))
     console.log('message', message)

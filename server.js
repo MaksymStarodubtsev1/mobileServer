@@ -6,10 +6,7 @@ const { createServer } = require("https");
 const express = require('express');
 const socketIO = require('socket.io')
 
-const httpServer = createServer({
-  key: readFileSync("/path/to/my/key.pem"),
-  cert: readFileSync("/path/to/my/cert.pem")
-});
+const httpServer = createServer()
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';

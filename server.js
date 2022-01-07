@@ -52,7 +52,7 @@ socket.on('getChatData', () => {
       const request = await get()
      return request
     }
-    send()
+    return send()
 })
   
   socket.on('firstEvent', (e) => {
@@ -66,7 +66,7 @@ socket.on('getChatData', () => {
       const request = await get()
       socket.broadcast.emit('updatedMessages', request)
     }
-    return send()
+    send()
   })
 
   socket.on('disconnect', (socket) => {

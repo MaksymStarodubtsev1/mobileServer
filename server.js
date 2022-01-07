@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
   
 socket.emit('secondEvent', 'hello from Server')
 socket.on('getChatData', () => {
-    const request = get()
+    const request = await get()
     return request
 })
   

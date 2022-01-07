@@ -4,9 +4,17 @@ const { readFileSync } = require("fs");
 const { createServer } = require("https");
 
 const express = require('express');
-const socketIO = require('socket.io')
 
 const httpServer = createServer()
+
+const socketIO = require('socket.io')(httpServer, {
+  cors: {
+    origin: "https://example.com",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
@@ -15,14 +23,7 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const io = socketIO(server)(httpServer, {
-  cors: {
-    origin: "https://example.com",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
-  }
-});
+const io = socketIO(server)
 
 // io.on('connection', (socket) => {
 //   console.log('Client connected');

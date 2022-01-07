@@ -66,7 +66,7 @@ socket.on('getChatData', () => {
       const request = await get()
       socket.broadcast.emit('updatedMessages', request)
     }
-    send()
+    return send()
   })
 
   socket.on('disconnect', (socket) => {

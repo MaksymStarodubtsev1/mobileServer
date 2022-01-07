@@ -1,20 +1,10 @@
 'use strict';
 
-const { readFileSync } = require("fs");
-const { createServer } = require("https");
-
 const express = require('express');
 
 const httpServer = createServer()
 
-const socketIO = require('socket.io')(httpServer, {
-  cors: {
-    origin: "https://example.com",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
-  }
-});
+const socketIO = require('socket.io')
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';

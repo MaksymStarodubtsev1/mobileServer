@@ -23,12 +23,20 @@ const io = socketIO(server)
 const axios = require('axios')
 
 function post(request) {
-  axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',{
-  body: JSON.stringify(request)
-}).then((res) => {
+  axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',request)
+    .then((res) => {
   console.log(res.statusCode)
 })
 }
+
+
+// function post(request) {
+//   axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',{
+//   body: JSON.stringify(request)
+// }).then((res) => {
+//   console.log(res.statusCode)
+// })
+// }
 
 function get() {
   return axios.get('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json')

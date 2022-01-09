@@ -18,7 +18,7 @@ const io = socketIO(server)
 //   socket.on('disconnect', () => console.log('Client disconnected'));
 // });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+//setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 const axios = require('axios')
 

@@ -62,11 +62,12 @@ socket.on('getChatData', () => {
   socket.on('sendMessage', (message) => {
     post(JSON.parse(message))
     console.log('message', message)
-    async function send(){
-      const request = await get()
-      io.emit('updatedMessages', request)
-    }
-    send()
+
+      const request = get()
+      .then((data) => {
+        io.emit('updatedMessages', data)
+      })
+
   })
 
   socket.on('disconnect', (socket) => {

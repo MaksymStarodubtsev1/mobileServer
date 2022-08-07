@@ -64,7 +64,7 @@ socket.on('getChatData', () => {
     console.log('message', message)
     async function send(){
       const request = await get()
-      socket.broadcast.emit('updatedMessages', request)
+      socket.emit('updatedMessages', request)
     }
     send()
   })

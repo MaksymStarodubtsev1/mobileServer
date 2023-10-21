@@ -46,14 +46,14 @@ function get() {
 io.on('connection', (socket) => {
   console.log('socket.id',socket.id)
   
-socket.emit('secondEvent', 'hello from Server')
-socket.on('getChatData', () => {
-    async function send(){
-      const request = await get()
-     return request
-    }
-    return send()
-})
+  socket.emit('secondEvent', 'hello from Server')
+  socket.on('getChatData', () => {
+      async function send(){
+        const request = await get()
+       return request
+      }
+      return send()
+  })
   
   socket.on('firstEvent', (e) => {
     console.log('firstEvent',e)

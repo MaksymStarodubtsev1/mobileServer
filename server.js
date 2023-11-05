@@ -15,11 +15,8 @@ const io = socketIO(server)
 
 const axios = require('axios')
 
-function post(request) {
-  axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',request)
-    .then((res) => {
-  console.log(res.statusCode)
-})
+function postMessage(request) {
+  return axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',request)
 }
 
 function get() {
@@ -37,18 +34,28 @@ function updateMessages(socket) {
 
 io.on('connection', (client) => {
   console.log('client.id',client.id)
-  //
-  // client.on('subscribe', (roomId) => {
-  //   client.join(roomId)
-  // })
-  //
-  // client.on('unsubscribe', (roomId) => {
-  //   client.leave(roomId)
-  // })
-  //
-  // client.on('send', (data) => {
-  //   io.sockets.in(data.room).emit('message', data)
-  // })
+
+  client.on('subscribe', (roomId) => {
+    client.join(roomId)
+  })
+
+  client.on('unsubscribe', (roomId) => {
+    client.leave(roomId)
+  })
+
+  client.on('send', (data) => {
+    postMessage(data.message)
+      .then(() => {
+
+        // on success message adding -> getting new message data
+        get()
+
+           // after success fetching data -> send update to clients in a room
+          .then((response) => {
+            io.sockets.in(data.room).emit('updatedMessages', response.data)
+          })
+      })
+  })
 
   /////////
 
@@ -56,10 +63,10 @@ io.on('connection', (client) => {
 
 
   client.on('sendMessage', (message) => {
-    post(JSON.parse(message))
-    console.log('message', message)
-
-    updateMessages(io)
+    postMessage(JSON.parse(message))
+      .then((response) => {
+        socket.emit('updatedMessages', response.data)
+      })
   })
 
   client.on('disconnect', (client) => {

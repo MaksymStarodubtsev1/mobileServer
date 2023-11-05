@@ -13,13 +13,6 @@ const server = express()
 
 const io = socketIO(server)
 
-// io.on('connection', (socket) => {
-//   console.log('Client connected');
-//   socket.on('disconnect', () => console.log('Client disconnected'));
-// });
-
-//setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
-
 const axios = require('axios')
 
 function post(request) {
@@ -29,48 +22,47 @@ function post(request) {
 })
 }
 
-
-// function post(request) {
-//   axios.post('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json',{
-//   body: JSON.stringify(request)
-// }).then((res) => {
-//   console.log(res.statusCode)
-// })
-// }
-
 function get() {
   return axios.get('https://vue-http-demo-763e4-default-rtdb.europe-west1.firebasedatabase.app/olenamaksym.json')
-  .then((response) => response.data)
 }
 
-io.on('connection', (socket) => {
-  console.log('socket.id',socket.id)
-  
-  socket.emit('secondEvent', 'hello from Server')
-  socket.on('getChatData', () => {
-      async function send(){
-        const request = await get()
-       return request
-      }
-      return send()
-  })
-  
-  socket.on('firstEvent', (e) => {
-    console.log('firstEvent',e)
-  })
-  
-  socket.on('sendMessage', (message) => {
+function updateMessages(socket) {
+  get()
+    .then((response) => {
+      socket.emit('updatedMessages', response.data)
+    })
+}
+
+
+
+io.on('connection', (client) => {
+  console.log('client.id',client.id)
+  //
+  // client.on('subscribe', (roomId) => {
+  //   client.join(roomId)
+  // })
+  //
+  // client.on('unsubscribe', (roomId) => {
+  //   client.leave(roomId)
+  // })
+  //
+  // client.on('send', (data) => {
+  //   io.sockets.in(data.room).emit('message', data)
+  // })
+
+  /////////
+
+  updateMessages(client)
+
+
+  client.on('sendMessage', (message) => {
     post(JSON.parse(message))
     console.log('message', message)
 
-      const request = get()
-      .then((data) => {
-        io.emit('updatedMessages', data)
-      })
-
+    updateMessages(io)
   })
 
-  socket.on('disconnect', (socket) => {
-    console.log('disconnect', socket);
+  client.on('disconnect', (client) => {
+    console.log('disconnect', client);
   })
 })

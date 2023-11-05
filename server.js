@@ -30,8 +30,6 @@ function updateMessages(socket) {
     })
 }
 
-
-
 io.on('connection', (client) => {
   console.log('client.id',client.id)
 
